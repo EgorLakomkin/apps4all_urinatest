@@ -1,5 +1,6 @@
 package org.opencv.samples.tutorial1;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -139,9 +140,10 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         return true;
     }
     public List<Integer> processing(List<Mat> image) {
-   	
+    	List<Integer> res = Arrays.asList(new Integer[] { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0});
     	
-    	return null;
+    	
+    	return res;
     }
     public void onCameraViewStarted(int width, int height) {
     	
@@ -161,7 +163,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     				setPhoto = false;
     				listPhotos.clear();
     			} else {
-    				// 
+    				sendAnalysisData(res);
     			}
     		}
     	}
