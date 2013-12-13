@@ -33,6 +33,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     static private int 				 numPhoto = 1;
     private boolean 			 setPhoto;
     private List<Mat>            listPhotos; 
+    private boolean 			 sendInited;
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -81,8 +82,9 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 				setPhoto = true;
 			}
 		};
+		photo.setOnClickListener(listener);
 		listPhotos = new LinkedList<Mat>();
-
+		sendInited = false;
     }
 
     @Override
@@ -163,7 +165,10 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     				setPhoto = false;
     				listPhotos.clear();
     			} else {
-    				sendAnalysisData(res);
+    				if(!sendInited) {
+    					sendInited = true;
+    					sendAnalysisData(res);
+    				}
     			}
     		}
     	}
