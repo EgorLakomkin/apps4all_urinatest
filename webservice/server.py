@@ -4,7 +4,9 @@ from parse_rest.connection import register
 from parse_rest.datatypes import Object
 import os, sys
 from parse_rest.user import User
+from collections import defaultdict
 
+titles = [u'Лейкоциты', u'Нитриты', u'Уробилиноген', u'Белок', u'pH', u'Кровь', u'Удельный вес', u'Кетоны', u'Билирубин', u'Глюкоза']
 
 class AnalysisResult(Object):
     pass
@@ -20,7 +22,7 @@ def get_results_by_user(user_id):
   return AnalysisResult.Query.filter(user_id=user_id).order_by("createdAt")
   
 def convert_analysis(analysis):
-  return str(analysis).split(';')
+  return map(int, analysis.split(';') )
   
 def append_result_by_user(user_id,result):
   new_analysis = AnalysisResult(analysis=result, user_id = user_id)
@@ -29,10 +31,23 @@ def append_result_by_user(user_id,result):
 @app.route('/statistics', methods=['GET'])
 def statistics():
   user_id = request.args.get('user_id')
-  user_analysis_history = [ {'id' : i,'analysis' : convert_analysis(analysis_obj.analysis) }  for i, analysis_obj in enumerate(get_results_by_user(  user_id) )  ]
-  print user_analysis_history
+  grouped_history = defaultdict(list)
+  user_analysis_history = [ convert_analysis(analysis_obj.analysis) for analysis_obj in get_results_by_user(  user_id)  ]
+  for obj_hist_id, analysis in enumerate(user_analysis_history):
+    for i, val in enumerate(analysis):
+      grouped_history[i].append( [obj_hist_id, val] )
+  
+  result_dict = {}
+  result_data = []
+  
+  for key in grouped_history:
+    result_data.append( {'title' : titles[ key ], 'values' : grouped_history[key], 'display' : True } )
+  
+  result_dict['data'] = result_data
+  
+  print result_data
   return render_template("statistics.html",
-        analysis = user_analysis_history)
+        analysis = result_dict)
 
   
 @app.route('/last_analysis', methods=['GET'])
@@ -40,7 +55,7 @@ def last_analysis():
   user_id = request.args.get('user_id')
   
   
-  analysises = get_results_by_user(  user_id)
+  analysises = list( get_results_by_user(  user_id) )
   if len(analysises) > 0:
     last_analysis = { 'id' : 0, 'analysis' : analysises[-1].analysis }
     print last_analysis
