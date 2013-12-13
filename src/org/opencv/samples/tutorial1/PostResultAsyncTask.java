@@ -12,6 +12,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -41,16 +42,9 @@ public class PostResultAsyncTask extends AsyncTask<String, String, String>{
         HttpResponse response;
         String responseString = null;
         try {
-        	HttpPost httppost = new HttpPost(uri[0]);
-        	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            String user_id = uri[1];
-            String analysis = uri[2];
-           	nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
-           	nameValuePairs.add(new BasicNameValuePair("analysis", analysis));            
-           	
-           	httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-        	
-            response = httpclient.execute(httppost);
+        	HttpGet httpget= new HttpGet(uri[0]);
+           	       	
+            response = httpclient.execute(httpget);
             StatusLine statusLine = response.getStatusLine();
             if(statusLine.getStatusCode() == HttpStatus.SC_OK){
                 ByteArrayOutputStream out = new ByteArrayOutputStream();

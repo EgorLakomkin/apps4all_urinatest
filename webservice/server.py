@@ -74,7 +74,7 @@ def last_analysis():
     return "No analysis for user"
 
   
-@app.route('/push_result', methods=['POST'])
+@app.route('/push_result')
 def push_result():
   user_id = request.args.get('user_id')
   analysis = request.args.get('analysis')
