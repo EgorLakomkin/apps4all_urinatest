@@ -70,6 +70,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+<<<<<<< HEAD
         Button photo = (Button)findViewById(R.id.button1);
         OnClickListener listener = new OnClickListener() {
 			
@@ -80,6 +81,9 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 			}
 		};
 		listPhotos = new LinkedList<Mat>();
+=======
+        
+>>>>>>> c495eb5601f0e52c092a465b2f9c19f64e0740a3
     }
 
     @Override
@@ -136,14 +140,24 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
         return true;
     }
+<<<<<<< HEAD
     public List<Integer> processing(List<Mat> image) {
+=======
+    
+    
+    
+    public String processing(Mat image) {
+>>>>>>> c495eb5601f0e52c092a465b2f9c19f64e0740a3
+    	
     	
     	return null;
     }
     public void onCameraViewStarted(int width, int height) {
+    	
     }
 
     public void onCameraViewStopped() {
+    	
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
@@ -161,5 +175,25 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     		}
     	}
         return inputFrame.rgba();
+    }
+    
+    
+    
+    void sendAnalysisData(List<Integer> _data)
+    {
+    	// here we get user id
+    	String user_id = "M5mMzrLAcU";
+    	String analysis = "";
+    	for (int i = 0; i < _data.size(); i++)
+    	{
+    		analysis += _data.get(i).toString();
+    		if (i != _data.size() - 1)
+    			analysis += ";";
+    	}
+    		
+    	
+    	
+    	PostResultAsyncTask postResults = new PostResultAsyncTask(this);
+    	postResults.execute("http://21dfe7b3.ngrok.com/push_result", user_id, analysis );
     }
 }

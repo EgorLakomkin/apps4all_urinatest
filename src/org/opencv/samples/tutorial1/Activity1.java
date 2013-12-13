@@ -2,6 +2,7 @@ package org.opencv.samples.tutorial1;
 import org.opencv.android.CameraBridgeViewBase;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 
 public class Activity1 extends Activity {
+	
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +35,7 @@ public class Activity1 extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 			    Intent intent = new Intent(Activity1.this, Tutorial1Activity.class);
-			    startActivity(intent);
+			    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ID );
 			}
 		};
 		analys.setOnClickListener(analysList);
@@ -53,4 +56,16 @@ public class Activity1 extends Activity {
 		stat.setOnClickListener(statsList);
    }
 
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+	  if (requestCode == Constants.ACTIVITY_RESULT_ID) {
+		 if(resultCode == Constants.RESULT_OK){      
+			  Log.d("UrinaTest", "RESULT_OK");
+	     }
+	    
+		 
+	  }
+	}
+	
 }
