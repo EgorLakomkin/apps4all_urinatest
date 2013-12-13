@@ -1,5 +1,8 @@
 package org.opencv.samples.tutorial1;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
@@ -14,7 +17,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class Tutorial1Activity extends Activity implements CvCameraViewListener2 {
@@ -23,7 +29,9 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     private CameraBridgeViewBase mOpenCvCameraView;
     private boolean              mIsJavaCamera = true;
     private MenuItem             mItemSwitchCamera = null;
-
+    static private int 				 numPhoto = 1;
+    private boolean 			 setPhoto;
+    private List<Mat>            listPhotos; 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -62,6 +70,16 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+        Button photo = (Button)findViewById(R.id.button1);
+        OnClickListener listener = new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				setPhoto = true;
+			}
+		};
+		listPhotos = new LinkedList<Mat>();
     }
 
     @Override
@@ -118,7 +136,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
         return true;
     }
-    public String processing(Mat image) {
+    public List<Integer> processing(List<Mat> image) {
     	
     	return null;
     }
@@ -129,9 +147,18 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-    	String res = processing(inputFrame.rgba());
-    	if(res != null) {
-    		finish();
+    	if(setPhoto) {
+    		if(numPhoto < listPhotos.size()){
+    			listPhotos.add(inputFrame.rgba());
+    		} else {
+    			List<Integer> res = processing(listPhotos);
+    			if (res == null) {
+    				setPhoto = false;
+    				listPhotos.clear();
+    			} else {
+    				// 
+    			}
+    		}
     	}
         return inputFrame.rgba();
     }
