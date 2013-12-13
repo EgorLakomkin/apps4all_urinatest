@@ -1,5 +1,7 @@
 package org.opencv.samples.tutorial1;
 
+import java.util.List;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
@@ -118,14 +120,20 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
         return true;
     }
+    
+    
+    
     public String processing(Mat image) {
+    	
     	
     	return null;
     }
     public void onCameraViewStarted(int width, int height) {
+    	
     }
 
     public void onCameraViewStopped() {
+    	
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
@@ -134,5 +142,25 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     		finish();
     	}
         return inputFrame.rgba();
+    }
+    
+    
+    
+    void sendAnalysisData(List<Integer> _data)
+    {
+    	// here we get user id
+    	String user_id = "M5mMzrLAcU";
+    	String analysis = "";
+    	for (int i = 0; i < _data.size(); i++)
+    	{
+    		analysis += _data.get(i).toString();
+    		if (i != _data.size() - 1)
+    			analysis += ";";
+    	}
+    		
+    	
+    	
+    	PostResultAsyncTask postResults = new PostResultAsyncTask(this);
+    	postResults.execute("http://21dfe7b3.ngrok.com/push_result", user_id, analysis );
     }
 }

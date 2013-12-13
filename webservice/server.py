@@ -59,8 +59,7 @@ def last_analysis():
   if len(analysises) > 0:
     last_analysis = convert_analysis(analysises[-1].analysis)
     
-    result_dict = {}
-    
+    result_dict = {}    
     
     result_data = []
     for i, val in enumerate(last_analysis):
@@ -78,6 +77,8 @@ def last_analysis():
 @app.route('/push_result', methods=['POST'])
 def push_result():
   user_id = request.args.get('user_id')
+  analysis = request.args.get('analysis')
+  append_result_by_user(user_id, analysis)
   return "OK"
   
   
