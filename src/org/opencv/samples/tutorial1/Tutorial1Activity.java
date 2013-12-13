@@ -70,7 +70,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
-<<<<<<< HEAD
+        
         Button photo = (Button)findViewById(R.id.button1);
         OnClickListener listener = new OnClickListener() {
 			
@@ -81,9 +81,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 			}
 		};
 		listPhotos = new LinkedList<Mat>();
-=======
-        
->>>>>>> c495eb5601f0e52c092a465b2f9c19f64e0740a3
+
     }
 
     @Override
@@ -140,15 +138,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
         return true;
     }
-<<<<<<< HEAD
     public List<Integer> processing(List<Mat> image) {
-=======
-    
-    
-    
-    public String processing(Mat image) {
->>>>>>> c495eb5601f0e52c092a465b2f9c19f64e0740a3
-    	
+   	
     	
     	return null;
     }
