@@ -1,5 +1,6 @@
 package org.opencv.samples.tutorial1;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -64,6 +65,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+        
     }
 
     @Override

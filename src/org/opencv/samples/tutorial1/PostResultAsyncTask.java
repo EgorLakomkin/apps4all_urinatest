@@ -19,16 +19,18 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 public class PostResultAsyncTask extends AsyncTask<String, String, String>{
 
-	private Context context;
+	private Activity activity;
 	
-	public PostResultAsyncTask(Context _context)
+	public PostResultAsyncTask(Activity _activity)
 	{
-		context = _context;
+		activity = _activity;
 	}
 	
 	@Override
@@ -69,7 +71,10 @@ public class PostResultAsyncTask extends AsyncTask<String, String, String>{
 
     @Override
     protected void onPostExecute(String result) {
-          	
+    	 Intent returnIntent = new Intent();
+    	 returnIntent.putExtra("result",result);
+    	 activity.setResult(Constants.RESULT_OK,returnIntent);     
+    	 activity.finish();  	
     	
     }
 }

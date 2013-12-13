@@ -60,7 +60,11 @@ public class Activity1 extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 	  if (requestCode == Constants.ACTIVITY_RESULT_ID) {
-		  
+		 if(resultCode == Constants.RESULT_OK){      
+			  Log.d("UrinaTest", "RESULT_OK");
+	     }
+	    
+		 
 	  }
 	}
 	
