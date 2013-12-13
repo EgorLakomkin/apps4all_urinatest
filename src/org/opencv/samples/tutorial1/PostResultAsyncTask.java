@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 public class PostResultAsyncTask extends AsyncTask<String, String, String>{
 
@@ -71,6 +72,9 @@ public class PostResultAsyncTask extends AsyncTask<String, String, String>{
 
     @Override
     protected void onPostExecute(String result) {
+    	
+    	Toast toast = Toast.makeText(activity, "Received", Toast.LENGTH_LONG);
+        toast.show();
     	 Intent returnIntent = new Intent();
     	 returnIntent.putExtra("result",result);
     	 activity.setResult(Constants.RESULT_OK,returnIntent);     
