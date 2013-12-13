@@ -75,10 +75,10 @@ public class PostResultAsyncTask extends AsyncTask<String, String, String>{
     	
     	Toast toast = Toast.makeText(activity, "Received", Toast.LENGTH_LONG);
         toast.show();
-    	 Intent returnIntent = new Intent();
-    	 returnIntent.putExtra("result",result);
-    	 activity.setResult(Constants.RESULT_OK,returnIntent);     
-    	 activity.finish();  	
+		Intent returnIntent = new Intent();
+		returnIntent.putExtra("result",result);
+		activity.setResult(Constants.RESULT_OK,returnIntent);     
+		activity.finish();  	
     	
     }
 }
