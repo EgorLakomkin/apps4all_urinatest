@@ -57,11 +57,20 @@ def last_analysis():
   
   analysises = list( get_results_by_user(  user_id) )
   if len(analysises) > 0:
-    last_analysis = { 'id' : 0, 'analysis' : analysises[-1].analysis }
-    print last_analysis
+    last_analysis = convert_analysis(analysises[-1].analysis)
+    
+    result_dict = {}
+    
+    
+    result_data = []
+    for i, val in enumerate(last_analysis):
+      result_data.append( {'title' : titles[ i ], 'values' : [0,val], 'display' : True } )
+    result_dict['data'] = result_data
+   
+    print result_data
     
     return render_template("result.html",
-	  analysis = last_analysis)
+	  analysis = result_dict)
   else:
     return "No analysis for user"
 
