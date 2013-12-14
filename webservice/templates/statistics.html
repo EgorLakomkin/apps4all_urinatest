@@ -15,7 +15,7 @@
 		
 		
 		$(document).ready(function () {
-			
+			/*
 			var test1=1;
 			var data1=[1, 5 ,7];
 			for (var i = 0; i < data1.length; i++) {
@@ -34,7 +34,19 @@
 					$('.col3').animate({right: "442px"}, 500)
 				}
 				return false;
-			}); 
+			} */
+			$.ajax({
+			  url: "statistics_json"
+			}).done(function(data) {
+			  alert(data.data);
+			  data = data.data;
+			  /*
+				for(var i = 0; i < data.length; i++) {
+				
+				}
+			  */
+			});
+			); 
 		}); 
 	</script>
 </head>
