@@ -52,6 +52,25 @@ def uploadjpeg():
   #  f.write(image_data)
   return str(glukoze)
   
+@app.route('/statistics_json', methods=['GET'])
+def statistics_json():
+  user_id = request.args.get('user_id')
+  grouped_history = defaultdict(list)
+  user_analysis_history = [ convert_analysis(analysis_obj.analysis) for analysis_obj in get_results_by_user(  user_id)  ]
+  for obj_hist_id, analysis in enumerate(user_analysis_history):
+    for i, val in enumerate(analysis):
+      grouped_history[i].append( [obj_hist_id, val] )
+  
+  result_dict = {}
+  result_data = []
+  
+  for key in grouped_history:
+    result_data.append( {'title' : titles[ key ], 'values' : grouped_history[key], 'display' : True } )
+  
+  result_dict['data'] = result_data
+  
+
+  return jsonify(analysis = result_dict)
   
 @app.route('/statistics', methods=['GET'])
 def statistics():

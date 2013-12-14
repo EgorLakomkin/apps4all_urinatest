@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class Activity1 extends Activity {
 	
@@ -23,13 +24,14 @@ public class Activity1 extends Activity {
         setContentView(R.layout.tutorial2_surface_view);
         WebView mWebView = (WebView) findViewById(R.id.webView1);
         
+        
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDefaultTextEncodingName("utf-8");
         settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
         mWebView.loadUrl(Constants.servAddress+"/last_analysis?user_id=M5mMzrLAcU");
-        Button analys = (Button)findViewById(R.id.analys);
-        Button stat = (Button)findViewById(R.id.stat);
+        ImageButton analys = (ImageButton)findViewById(R.id.analys);
+        ImageButton stat = (ImageButton)findViewById(R.id.stat);
         OnClickListener analysList = new OnClickListener() {		
 			@Override
 			public void onClick(View v) {

@@ -9,22 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/stat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="20dp"
-        android:padding="20dp"
-        android:text="Statistic" />
-
-    <Button
+    <ImageButton
         android:id="@+id/analys"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_margin="20dp"
+        android:layout_gravity="top|right"
+        android:layout_margin="40dp"
         android:padding="20dp"
-        android:text="Analysis" />
+        android:background="@drawable/photo" />
+
+    <ImageButton
+        android:id="@+id/stat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="40dp"
+        android:padding="20dp"
+        android:background="@drawable/stat"/>
 
 </FrameLayout>
