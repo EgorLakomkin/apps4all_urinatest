@@ -48,7 +48,7 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost postRequest = new HttpPost(req_url);
 		MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-		ByteArrayBody bab = new ByteArrayBody(array,  "image/jpeg", "submission.jpg");
+		ByteArrayBody bab = new ByteArrayBody(array,  "image/bmp", "submission.bmp");
 
 		reqEntity.addPart("image", bab);
 		
