@@ -48,4 +48,9 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 		return null;
 	}
 
+	@Override
+    protected void onPostExecute(String result) {
+		super.onPostExecute(result);
+	}
+	
 }

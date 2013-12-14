@@ -6,6 +6,7 @@ import os, sys
 from parse_rest.user import User
 from collections import defaultdict
 
+root_dirname, root_filename = os.path.split(os.path.abspath(__file__))  
 titles = [u'Лейкоциты', u'Нитриты', u'Уробилиноген', u'Белок', u'pH', u'Кровь', u'Удельный вес', u'Кетоны', u'Билирубин', u'Глюкоза']
 
 class AnalysisResult(Object):
@@ -32,7 +33,7 @@ def append_result_by_user(user_id,result):
 def uploadjpeg():
   user_id = request.args.get('user_id')
   jpeg_data = request.args.get('image')
-  with open('test','wb') as f:
+  with open(os.path.join(root_dirname, 'test'),'wb') as f:
     f.write(jpeg_data)
   return "OK"
   
@@ -91,10 +92,7 @@ def push_result():
   return "OK"
   
   
-if __name__ == "__main__":
-  root_dirname, root_filename = os.path.split(os.path.abspath(__file__))  
-      
-  port = int(sys.argv[1])
-  
+if __name__ == "__main__":      
+  port = int(sys.argv[1])  
   app.run(host = '0.0.0.0', port = port, debug=True)
   

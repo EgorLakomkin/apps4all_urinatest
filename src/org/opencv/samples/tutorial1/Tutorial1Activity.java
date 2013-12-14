@@ -289,7 +289,9 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 		    						dataImage[i * rectangle.rows() + j + 1] = (byte)arr[1];
 		    						dataImage[i * rectangle.rows() + j + 2] = (byte)arr[2]; 
 		    					}	
-	    					}	    					
+	    					}	 
+	    					
+	    					new ByteArrayPost(this, "/upload_jpeg",dataImage).execute();
 //sendAnalysisData(res);
 	    				}
 	    			}
