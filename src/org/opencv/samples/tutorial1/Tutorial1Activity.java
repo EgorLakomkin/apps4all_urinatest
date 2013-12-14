@@ -291,7 +291,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 		    					}	
 	    					}	 
 	    					
-	    					new ByteArrayPost(this, "/upload_jpeg",dataImage).execute();
+	    					new ByteArrayPost(this, Constants.servAddress + "/upload_jpeg",dataImage).execute();
 //sendAnalysisData(res);
 	    				}
 	    			}
@@ -312,7 +312,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     	
     	    	
     	PostResultAsyncTask postResults = new PostResultAsyncTask(this);
-    	postResults.execute("http://21dfe7b3.ngrok.com/push_result?user_id=" + user_id + "&image=" + data );
+    	postResults.execute(Constants.servAddress+"/push_result?user_id=" + user_id + "&image=" + data );
      }
     
     void sendAnalysisData(List<Integer> _data)
@@ -329,6 +329,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     		
     	    	
     	PostResultAsyncTask postResults = new PostResultAsyncTask(this);
-    	postResults.execute("http://21dfe7b3.ngrok.com/push_result?user_id=" + user_id + "&analysis=" + analysis );
+    	postResults.execute(Constants.servAddress+"/push_result?user_id=" + user_id + "&analysis=" + analysis );
     }
 }

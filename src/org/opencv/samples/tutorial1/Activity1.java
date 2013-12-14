@@ -27,7 +27,7 @@ public class Activity1 extends Activity {
         settings.setJavaScriptEnabled(true);
         settings.setDefaultTextEncodingName("utf-8");
         settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-        mWebView.loadUrl("http://21dfe7b3.ngrok.com/last_analysis?user_id=M5mMzrLAcU");
+        mWebView.loadUrl(Constants.servAddress+"/last_analysis?user_id=M5mMzrLAcU");
         Button analys = (Button)findViewById(R.id.analys);
         Button stat = (Button)findViewById(R.id.stat);
         OnClickListener analysList = new OnClickListener() {		
@@ -49,7 +49,7 @@ public class Activity1 extends Activity {
 		        settings.setJavaScriptEnabled(true);
 		        settings.setDefaultTextEncodingName("utf-8");
 		        settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-		        mWebView.loadUrl("http://21dfe7b3.ngrok.com/statistics?user_id=M5mMzrLAcU");
+		        mWebView.loadUrl(Constants.servAddress+"/statistics?user_id=M5mMzrLAcU");
 		        
 			}
 		};
