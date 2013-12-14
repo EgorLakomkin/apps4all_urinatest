@@ -231,42 +231,12 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     	int widthStripe = 450;
     	int heightStripe = 110;
     	if(thereIsRect) {
-    		/*
-    		Imgproc.Sobel(rectangle, hsvRect, 5, 0, 1);
-    		
-    		
-        	Imgproc.cvtColor(rectangle, hsvRect, Imgproc.COLOR_BGR2HSV);
-        	List<Mat> hsvList = new LinkedList<Mat>();
-        	Core.split(hsvRect, hsvList);
-        	
-        	Imgproc.Canny(hsvList.get(0), edge, 45, 45);
-        	Core.rectangle(img, new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2), new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2), new Scalar(0,120,0));
-            
-        	Imgproc.GaussianBlur(img, gauss, new Size(0,0), 3);
-        	Core.addWeighted(img, 1.15, gauss, -0.85, 0, img);
-        	
-        	Mat h = hsvList.get(0);rectangle
-        	byte[] data = new byte[4]; 
-        	for(int i = 0 ; i < widthStripe; i++ ) {
-        		for(int j = 0 ; j < heightStripe; j++ ) {
-        			double[] temp = h.get(i,j);
-            		data[0] = data[1] = data[2] = data[3] =  (byte)temp[0]; 
-        			img.put(i, j, data);
-            	}
-        	}
-        	*/
-    		/*for(int i = 0 ; i < widthStripe; i++ ) {
-        		for(int j = 0 ; j < heightStripe; j++ ) {
-        			img.put(i, j, hsvRect.get(i, j));
-            	}
-        	}*/
+
         	Core.rectangle(img, new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2), new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2), new Scalar(0,120,0));
             
         	return img;
     	} else {
 	    	if(setPhoto) {
-	    		
-
 	    			listPhotos.clear();
 	    			listPhotos.add(inputFrame.rgba().submat(new Rect(
 							new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2),
@@ -278,9 +248,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 	    				listPhotos.clear();
 	    			} else {
 	    				if(!sendInited) {
-	    					//sendInited = true;
-	    					//thereIsRect = true;
-	    					
 	    					rectangle = img.submat(
 	    									new Rect(
 	    											new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2),
@@ -289,32 +256,25 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 	    									);
 	    					thereIsRect = true;				
 	    					setPhoto = false;
-
 	    					Mat mIntermediateMat = new Mat();
-
 	    					Imgproc.cvtColor(rectangle, mIntermediateMat, Imgproc.COLOR_RGBA2BGR, 3);
 	    					File path =
 						    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 						    String filename = "test.jpg";
-						   File file = new File(path, filename);
-
-						  Boolean bool = null;
-						  filename = file.toString();
-						  bool = Highgui.imwrite(filename, mIntermediateMat);
+						    File file = new File(path, filename);
+						    Boolean bool = null;
+						  	filename = file.toString();
+						  	bool = Highgui.imwrite(filename, mIntermediateMat);
 						  
-						  try {
-							byte[] preved_img = IOUtil.readFile(file);
-							Log.i("success", "LEN_" + String.valueOf(preved_img.length));
-							new ByteArrayPost(this, Constants.servAddress + "/upload_jpeg",preved_img).execute();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							Log.e("success", "error "+e.toString());
-							e.printStackTrace();
-						}
-	    					
-    					
-    					
-//sendAnalysisData(res);
+							try {
+								byte[] preved_img = IOUtil.readFile(file);
+								Log.i("success", "LEN_" + String.valueOf(preved_img.length));
+								new ByteArrayPost(this, Constants.servAddress + "/upload_jpeg",preved_img).execute();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								Log.e("success", "error "+e.toString());
+								e.printStackTrace();
+							}
 	    				}
 	    			}
 	    		
