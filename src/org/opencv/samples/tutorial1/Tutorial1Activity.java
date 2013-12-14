@@ -290,6 +290,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 		    						dataImage[idxout] = (byte)arr[0];
 		    						dataImage[idxout + 1] = (byte)arr[1];
 		    						dataImage[idxout + 2] = (byte)arr[2]; 
+
 		    					}	
 	    					}	 
 	    					

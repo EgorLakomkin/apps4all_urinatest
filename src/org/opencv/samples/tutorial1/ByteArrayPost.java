@@ -58,7 +58,7 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 		HttpPost postRequest = new HttpPost(req_url);
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("image",base64));
+		params.add(new BasicNameValuePair("image", new String(array)));
 		
 		try {
 			postRequest.setEntity(new UrlEncodedFormEntity(params));
