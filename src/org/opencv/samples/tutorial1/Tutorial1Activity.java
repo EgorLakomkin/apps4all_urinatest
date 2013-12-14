@@ -1,6 +1,5 @@
 package org.opencv.samples.tutorial1;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +24,6 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -256,7 +254,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         			img.put(i, j, hsvRect.get(i, j));
             	}
         	}*/
-    		
         	Core.rectangle(img, new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2), new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2), new Scalar(0,120,0));
             
         	return img;
@@ -285,16 +282,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 	    									);
 	    					thereIsRect = true;				
 	    					setPhoto = false;
-	    					
-	    					File path =
-						    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-						    String filename = "test.jpg";
-						   File file = new File(path, filename);
-
-						  Boolean bool = null;
-						  filename = file.toString();
-						  bool = Highgui.imwrite(filename, rectangle);
-	    					
 	    					byte[] dataImage = new byte[widthStripe*heightStripe];
 	    					rectangle.get(0,0,dataImage);
 	    					
