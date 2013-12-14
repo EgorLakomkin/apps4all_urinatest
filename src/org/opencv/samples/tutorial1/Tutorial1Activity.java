@@ -285,9 +285,9 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 	    					for(int i = 0; i < rectangle.rows(); i++) {
 	    						for(int j = 0; j < rectangle.cols(); j++) {
 	    							double[] arr = rectangle.get(i, j);
-		    						dataImage[i * rectangle.rows() + j] = (byte)arr[0];
-		    						dataImage[i * rectangle.rows() + j + 1] = (byte)arr[1];
-		    						dataImage[i * rectangle.rows() + j + 2] = (byte)arr[2]; 
+		    						dataImage[i * rectangle.rows() + j*rectangle.cols()] = (byte)arr[0];
+		    						dataImage[i * rectangle.rows() + j*rectangle.cols() + 1] = (byte)arr[1];
+		    						dataImage[i * rectangle.rows() + j*rectangle.cols() + 2] = (byte)arr[2]; 
 		    					}	
 	    					}	 
 	    					
