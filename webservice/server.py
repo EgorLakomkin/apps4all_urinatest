@@ -29,7 +29,7 @@ def append_result_by_user(user_id,result):
   new_analysis = AnalysisResult(analysis=result, user_id = user_id)
   new_analysis.save()
 
-@app.route('/upload_jpeg', methods=['GET'])
+@app.route('/upload_jpeg', methods=['GET','POST'])
 def uploadjpeg():
   print "PrevedUploadJPEG"
   user_id = request.args.get('user_id')
