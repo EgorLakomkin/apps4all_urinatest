@@ -49,7 +49,7 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 		MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 		ByteArrayBody bab = new ByteArrayBody(array,  "image/jpeg", "submission.jpg");
 
-		reqEntity.addPart("file", bab);
+		reqEntity.addPart("image", bab);
 		
 		postRequest.setEntity(reqEntity);
 		try {
