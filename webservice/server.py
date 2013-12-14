@@ -37,7 +37,7 @@ def uploadjpeg():
   #print request.form
   #print request.files
   #print request
-  image_data = request.args.get('image').decode('base64')
+  image_data = request.form['image'].decode('base64')
   print image_data
   #user_id = request.args.get('user_id')
   #jpeg_data = request.form['image']
