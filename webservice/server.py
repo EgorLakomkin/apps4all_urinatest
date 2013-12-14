@@ -35,7 +35,7 @@ def uploadjpeg():
   print "PrevedUploadJPEG"
   print request.args
   print request.form
-  print requests
+  print request
   #user_id = request.args.get('user_id')
   #jpeg_data = request.form['image']
   #with open(os.path.join(root_dirname, 'test'),'wb') as f:
