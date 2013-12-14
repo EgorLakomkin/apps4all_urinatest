@@ -5,7 +5,7 @@ from parse_rest.datatypes import Object
 import os, sys
 from parse_rest.user import User
 from collections import defaultdict
-from te
+
 
 root_dirname, root_filename = os.path.split(os.path.abspath(__file__))  
 titles = [u'Лейкоциты', u'Нитриты', u'Уробилиноген', u'Белок', u'pH', u'Кровь', u'Удельный вес', u'Кетоны', u'Билирубин', u'Глюкоза']
@@ -35,7 +35,7 @@ def uploadjpeg():
   print "PrevedUploadJPEG"
   print request.args
   print request.form
-  print request
+  print requests
   #user_id = request.args.get('user_id')
   #jpeg_data = request.form['image']
   #with open(os.path.join(root_dirname, 'test'),'wb') as f:
