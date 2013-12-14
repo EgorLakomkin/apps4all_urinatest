@@ -281,7 +281,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 	    									);
 	    					thereIsRect = true;				
 	    					setPhoto = false;
-	    					//sendAnalysisData(res);
+	    					String dump = rectangle.dump();
+	    					sendAnalysisData(res);
 	    				}
 	    			}
 	    		
