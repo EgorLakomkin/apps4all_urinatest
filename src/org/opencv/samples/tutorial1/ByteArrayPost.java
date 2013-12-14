@@ -55,7 +55,7 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 		HttpPost post = new HttpPost(req_url);
 		MultipartEntity multiPart = new MultipartEntity();
 		
-		multiPart.addPart("file", new ByteArrayBody(array, "image.img"));
+		multiPart.addPart("file", new ByteArrayBody(array, "image.jpg"));
 		post.setEntity(multiPart);
 		try {
 			client.execute(post);
