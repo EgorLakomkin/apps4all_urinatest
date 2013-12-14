@@ -4,7 +4,7 @@ import numpy as np
 from scipy.signal import medfilt2d 
 
 def process_file(filename):
-  img = cv2.imread("test_ref.jpg")
+  img = cv2.imread(filename)
   img = cv2.resize(img,(100,600))
   hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
   s = cv2.split(hsv)[1]
