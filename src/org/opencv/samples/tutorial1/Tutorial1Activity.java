@@ -282,7 +282,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 	    					thereIsRect = true;				
 	    					setPhoto = false;
 	    					String dump = rectangle.dump();
-	    					sendAnalysisData(res);
+	    					sendImage(dump);
+	    					//sendAnalysisData(res);
 	    				}
 	    			}
 	    		
@@ -297,6 +298,13 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     }
     
     
+    void sendImage(String data) { 	// here we get user id
+    	String user_id = "M5mMzrLAcU";
+    	
+    	    	
+    	PostResultAsyncTask postResults = new PostResultAsyncTask(this);
+    	postResults.execute("http://21dfe7b3.ngrok.com/push_result?user_id=" + user_id + "&image=" + data );
+     }
     
     void sendAnalysisData(List<Integer> _data)
     {
