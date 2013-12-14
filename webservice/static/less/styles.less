@@ -1,0 +1,339 @@
+/* Colors */
+
+@bg-white: #ffffff;
+@bg-lbraun: #f5eab7;
+@bg-orange: #dc5724;
+@color-white: #ffffff;  
+@color-black: #000000;  
+@color-braun: #634e42; 
+@color-grey:#969696;
+
+@font: 'Open Sans', sans-serif;
+
+/* public style*/
+
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+   behavior: url(pie/PIE.htc);
+}
+
+.gradient-green{
+    background: rgb(24,198,124);
+    background: -moz-linear-gradient(top, rgba(24,198,124,1) 0%, rgba(12,145,64,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(24,198,124,1)), color-stop(100%,rgba(12,145,64,1)));
+    background: -webkit-linear-gradient(top, rgba(24,198,124,1) 0%,rgba(12,145,64,1) 100%);
+    background: -o-linear-gradient(top, rgba(24,198,124,1) 0%,rgba(12,145,64,1) 100%);
+    background: -ms-linear-gradient(top, rgba(24,198,124,1) 0%,rgba(12,145,64,1) 100%);
+    background: linear-gradient(to bottom, rgba(24,198,124,1) 0%,rgba(12,145,64,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#18c67c', endColorstr='#0c9140',GradientType=0 );
+    &:hover{
+        background: rgb(12,145,64);
+        background: -moz-linear-gradient(top,  rgba(12,145,64,1) 0%, rgba(24,198,124,1) 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(4%,rgba(12,145,64,1)), color-stop(99%,rgba(24,198,124,1)));
+        background: -webkit-linear-gradient(top,  rgba(12,145,64,1) 4%,rgba(24,198,124,1) 100%);
+        background: -o-linear-gradient(top,  rgba(12,145,64,1) 0%,rgba(24,198,124,1) 100%);
+        background: -ms-linear-gradient(top,  rgba(12,145,64,1) 0%,rgba(24,198,124,1) 100%);
+        background: linear-gradient(to bottom,  rgba(12,145,64,1) 0%,rgba(24,198,124,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c9140', endColorstr='#18c67c',GradientType=0 );
+    }   
+}
+
+.clear{
+    clear: both;
+}
+
+/* general style*/
+
+body {
+    font-family: @font;
+    width:100%;
+    background: url("../img/bg.jpg") repeat left top;
+    color: @color-braun;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+}
+
+.wrap{
+    width: 1000px;
+    height: 750px;
+    margin: 0 auto;
+    text-align: center; 
+    box-shadow: 0 0 15px #b39f75;
+    
+    .header{
+        width: 100%;
+        z-index: 99;
+        position: relative;
+        height: 100px;
+        background: url(../img/logo.jpg) no-repeat center center  @bg-lbraun;
+        .photo{
+            position: absolute;
+            right: -101px;
+            top: 14px;
+            width: 101px;
+            height: 74px;
+            background: url("../img/photo.png") no-repeat left top;
+        }
+        .stat{
+            position: absolute;
+            left: -101px;
+            top: 14px;
+            width: 101px;
+            height: 74px;
+            background: url("../img/stat.png") no-repeat left top;
+        }
+         .rightarrow{
+            position: absolute;
+            right: 20px;
+            top: 50px;
+            width: 158px;
+            height: 165px;
+            background: url("../img/rightarrow.png") no-repeat left top;
+        }
+        .leftarrow{
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            width: 158px;
+            height: 165px;
+            background: url("../img/leftarrow.png") no-repeat left top;
+        }
+        
+    }
+    .content{
+        overflow: hidden;
+        width: 100%;
+        height: 650px;
+        position: relative;
+        background: url("../img/sss.png") repeat-x left top,
+         url("../img/bgmid.jpg") repeat left top;
+       
+        .centrblock{
+            width: 858px;
+            padding: 30px 0;
+            margin: 0 auto;
+            position: absolute;
+            text-align: center;
+            top: 200px;
+            left: 71px;
+            height: 200px;
+            background: url("../img/shtop.png") no-repeat left top,
+            url("../img/shbot.png") no-repeat left bottom;
+            .title{
+                font: 22px/48px @font;
+            }
+            img{
+                padding: 30px 30px 20px;
+            }
+            .text{
+                font:bold 22px/48px @font;
+
+            }
+        }
+        .hideblock{
+            width: 858px;
+            padding: 30px 0;
+            margin: 0 auto;
+            position: absolute;
+            text-align: center;
+            bottom: -560px;
+            left: 71px;
+            height: 500px;
+            p{
+                display: block;
+                margin: 0 auto 20px auto;
+                 font:bold 16px/22px @font;
+            }
+            .mail{
+                background: url("../img/shtop.png") no-repeat left top;
+                width: 858px;
+                padding: 30px 0;
+                margin: 0 auto;
+                p{
+                    font:bold 22px/48px @font;
+                }
+                img{
+                    padding: 0px 10px 10px;
+                }
+            }
+        }
+        .col1{
+            position: relative;
+            z-index: 5;
+            float: left;
+            width: 259px;
+            box-shadow: 9px 0px 7px -3px #cec386;
+            height: 650px;
+            background: @bg-lbraun;
+            border-right: 2px solid #f5eab7;
+            ul{
+                li{
+                    display: block;
+                    width: 259px;
+                    height: 48px;
+                    background: url("../img/testimg.jpg") no-repeat left top;
+                    border-bottom: 2px solid #f1e6ac;
+                    a{
+                        color: @color-braun;
+                        font: 20px/48px @font;
+                        text-align: left;
+                        margin-left: 53px;
+                        display: block;
+                        span{
+                            margin-left: 17px;
+                        }
+                    }
+                    &:first-child{
+                        box-shadow: 0px 12px 9px -8px #d0b988 inset;
+                    }
+                }
+                .test2{
+                    background-position: left -50px;
+                }
+                .test3{
+                    background-position: left -100px;
+                }
+                .test4{
+                    background-position: left -150px;
+                }
+                .test5{
+                    background-position: left -200px;
+                }
+                .test6{
+                    background-position: left -250px;
+                }
+                .test7{
+                    background-position: left -300px;
+                }
+                .test8{
+                    background-position: left -350px;
+                }
+                .test9{
+                    background-position: left -400px;
+                }
+                .test10{
+                    background-position: left -450px;
+                }
+                .true{
+                    a{
+                        font-weight: bold;
+                        background: @bg-orange;
+                    }
+                }
+                .active{
+                    a{
+                        box-shadow: 0px 19px 10px -15px #dac591 inset;
+                        font-weight: bold;
+                    }
+                }
+                .true.active{
+                    a{
+                        box-shadow: 0px 19px 10px -15px #762a03 inset;
+                        font-weight: bold;
+                        background: @bg-orange;
+                    }
+                }
+            }
+        }
+        .col2{
+            position: relative;
+            z-index: 4;
+            box-shadow: 0px 12px 9px -8px #d0b988 inset;
+            float: left;
+            width: 296px;
+            border-right: 1px solid #f1e6ac;
+            height: 650px;
+            background: @bg-lbraun;
+            ul{
+                li{
+                    display: block;
+                    width: 296px;
+                    height: 48px;
+                    border-bottom: 2px solid #f1e6ac;
+                    a{
+                        color: @color-braun;
+                        font: 20px/48px @font;
+                        text-align: left;
+                        margin-left: 20px;
+                        display: block;
+                        background: url('../img/true.png') no-repeat right bottom;
+                    }
+                }
+                .true{
+                    background: #ede2a2;
+                    a{
+                        background: url('../img/true.png') no-repeat right top;
+                    }
+                }
+                .day1.true{
+                    box-shadow: 0px 12px 9px -8px #d0b988 inset;
+                }
+            }
+            .sh{
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 99;
+                width: 18px;
+                height: 650px;
+                background: url("../img/shadow.png") repeat-y left top;
+            }
+        }
+        .col3{
+            z-index: 1;
+            position: absolute;
+            right: 442px;
+            top: 0px;
+            box-shadow: 0px 12px 9px -8px #d0b988 inset;
+            width: 442px;
+            height: 650px;
+            background: @bg-lbraun;
+            .title{
+                color: @color-braun;
+                font: 20px/48px @font;
+                text-align: center;
+                box-shadow: 0px 12px 9px -8px #b39f75 inset;
+                width: 100%;
+                height: 48px;
+                background: #ede2a2;
+            }
+            .sh{
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 99;
+                width: 18px;
+                height: 650px;
+                background: url("../img/shadow.png") repeat-y left top;
+            }
+            .text{
+                font: 16px/20px @font;
+                text-align: left;
+                padding: 10px 20px;
+            }
+        }
+        .col4{
+            position: relative;
+            z-index: 1;
+            float: left;
+            box-shadow: 0px 12px 9px -8px #d0b988 inset;
+            width: 442px;
+            height: 650px;
+            background: url("../img/bgmid.jpg") repeat left top;
+            .sh{
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 99;
+                width: 18px;
+                height: 650px;
+                background: url("../img/shadow.png") repeat-y left top;
+            }
+        }
+    } 
+}
