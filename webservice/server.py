@@ -5,8 +5,9 @@ from parse_rest.datatypes import Object
 import os, sys
 from parse_rest.user import User
 from collections import defaultdict
-
-
+import numpy as np
+import cv2
+import cv2.cv as cv
 root_dirname, root_filename = os.path.split(os.path.abspath(__file__))  
 titles = [u'Лейкоциты', u'Нитриты', u'Уробилиноген', u'Белок', u'pH', u'Кровь', u'Удельный вес', u'Кетоны', u'Билирубин', u'Глюкоза']
 
@@ -37,11 +38,11 @@ def uploadjpeg():
   #print request.form
   #print request.files
   #print request
-  image_data = request.form['image'].decode('base64')
+  image_data = request.form['image']
   #print image_data
   #user_id = request.args.get('user_id')
   #jpeg_data = request.form['image']
-  with open(os.path.join(root_dirname, 'test'),'wb') as f:
+  with open(os.path.join(root_dirname, 'test'),'w') as f:
     f.write(image_data)
   return "OK"
   
