@@ -8,7 +8,16 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
@@ -34,6 +43,15 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     private boolean 			 setPhoto;
     private List<Mat>            listPhotos; 
     private boolean 			 sendInited;
+    private Mat 				 rectangle;
+    private Mat 				 hsv;
+    private boolean  			 thereIsRect;
+    private Mat 				 fullSizeRect;
+    private Mat					 edge;
+    private Mat					 gauss;
+    
+    
+    private	Mat 				 hsvRect;
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -79,12 +97,17 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				setPhoto = true;
+				if(setPhoto == true) {
+					setPhoto = false;
+				} else {
+					setPhoto = true;
+				}
 			}
 		};
 		photo.setOnClickListener(listener);
 		listPhotos = new LinkedList<Mat>();
 		sendInited = false;
+		thereIsRect = false;
     }
 
     @Override
@@ -143,12 +166,51 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     }
     public List<Integer> processing(List<Mat> image) {
     	List<Integer> res = Arrays.asList(new Integer[] { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0});
+    	Mat img = image.get(0);
+    	Mat resizedImage = new Mat(img.height(),img.width(), CvType.CV_8UC3);
+    	
+    	List<Mat> hsvList = new LinkedList<Mat>();
+    	Core.split(resizedImage, hsvList);
+    	Mat s = hsvList.get(1);
+    	Mat h = hsvList.get(0);
+    	Mat v = hsvList.get(2);
     	
     	
+    	// medfilter
+    	Mat s_thresholded = new Mat(resizedImage.height(), resizedImage.width(), CvType.CV_8UC1);
+    	Imgproc.threshold(s, s_thresholded, 0, 255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+    	Mat morphRect = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5,5));
+    	Mat s_dilated = new Mat(resizedImage.height(), resizedImage.width(), CvType.CV_8UC1);
+    	
+    	Imgproc.dilate(s_thresholded, s_dilated, morphRect);
+    	List<MatOfPoint> contours = new LinkedList<MatOfPoint>();
+    	Mat hierarchy = new Mat(); 
+    	Imgproc.findContours(s_dilated, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+    	List<MatOfPoint> approxCurve = new LinkedList<MatOfPoint>();
+    	MatOfPoint2f temp = new MatOfPoint2f();
+    	MatOfPoint2f temp2 = new MatOfPoint2f();
+    	Log.d("contours","number_contours_" + String.valueOf(contours.size()));
+    	
+    	for(int i = 0; i < contours.size() ; i++) {
+    		contours.get(i).convertTo(temp, CvType.CV_32FC2);
+    		Imgproc.approxPolyDP(temp, temp2, 3, true);
+    		MatOfPoint newMOP = new MatOfPoint();
+    		
+    		temp2.convertTo(newMOP,CvType.CV_32S );
+    		
+    		approxCurve.add( newMOP );
+    	}
+    	Log.d("contours","number_curves_" + String.valueOf(approxCurve.size()));
     	return res;
     }
     public void onCameraViewStarted(int width, int height) {
-    	
+    	fullSizeRect = new Mat(height,width , CvType.CV_8UC4);
+    	edge = new Mat(height,width , CvType.CV_8UC4);
+    	hsv = new Mat(height,width , CvType.CV_8UC4);
+    	gauss = new Mat(height,width , CvType.CV_8UC4);
+
+		rectangle = new Mat(400, 80, CvType.CV_8UC4);
+		hsvRect = new Mat(400, 80 , CvType.CV_8UC4);
     }
 
     public void onCameraViewStopped() {
@@ -156,23 +218,81 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-    	if(setPhoto) {
-    		if(numPhoto < listPhotos.size()){
-    			listPhotos.add(inputFrame.rgba());
-    		} else {
-    			List<Integer> res = processing(listPhotos);
-    			if (res == null) {
-    				setPhoto = false;
-    				listPhotos.clear();
-    			} else {
-    				if(!sendInited) {
-    					sendInited = true;
-    					sendAnalysisData(res);
-    				}
-    			}
-    		}
+    	Mat img = inputFrame.rgba();
+    	int widthImage = img.rows();
+    	int colsImage = img.cols();
+    	int widthStripe = 450;
+    	int heightStripe = 110;
+    	if(thereIsRect) {
+    		/*
+    		Imgproc.Sobel(rectangle, hsvRect, 5, 0, 1);
+    		
+    		
+        	Imgproc.cvtColor(rectangle, hsvRect, Imgproc.COLOR_BGR2HSV);
+        	List<Mat> hsvList = new LinkedList<Mat>();
+        	Core.split(hsvRect, hsvList);
+        	
+        	Imgproc.Canny(hsvList.get(0), edge, 45, 45);
+        	Core.rectangle(img, new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2), new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2), new Scalar(0,120,0));
+            
+        	Imgproc.GaussianBlur(img, gauss, new Size(0,0), 3);
+        	Core.addWeighted(img, 1.15, gauss, -0.85, 0, img);
+        	
+        	Mat h = hsvList.get(0);rectangle
+        	byte[] data = new byte[4]; 
+        	for(int i = 0 ; i < widthStripe; i++ ) {
+        		for(int j = 0 ; j < heightStripe; j++ ) {
+        			double[] temp = h.get(i,j);
+            		data[0] = data[1] = data[2] = data[3] =  (byte)temp[0]; 
+        			img.put(i, j, data);
+            	}
+        	}
+        	*/
+    		/*for(int i = 0 ; i < widthStripe; i++ ) {
+        		for(int j = 0 ; j < heightStripe; j++ ) {
+        			img.put(i, j, hsvRect.get(i, j));
+            	}
+        	}*/
+        	Core.rectangle(img, new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2), new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2), new Scalar(0,120,0));
+            
+        	return img;
+    	} else {
+	    	if(setPhoto) {
+
+	    			listPhotos.clear();
+	    			listPhotos.add(inputFrame.rgba().submat(new Rect(
+							new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2),
+							new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2)))
+							);
+	    			List<Integer> res = processing(listPhotos);
+	    			if (res == null) {
+	    				setPhoto = false;
+	    				listPhotos.clear();
+	    			} else {
+	    				if(!sendInited) {
+	    					//sendInited = true;
+	    					//thereIsRect = true;
+	    					
+	    					rectangle = img.submat(
+	    									new Rect(
+	    											new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2),
+	    											new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2)
+	    											)
+	    									);
+	    					thereIsRect = true;				
+	    					setPhoto = false;
+	    					//sendAnalysisData(res);
+	    				}
+	    			}
+	    		
+	    	}
     	}
-        return inputFrame.rgba();
+    	Core.rectangle(img, new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2), new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2), new Scalar(0,120,0));
+        /*
+    	
+
+    	*/
+        return img;
     }
     
     
