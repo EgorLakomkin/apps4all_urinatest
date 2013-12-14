@@ -253,6 +253,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         			img.put(i, j, hsvRect.get(i, j));
             	}
         	}*/
+    		
         	Core.rectangle(img, new Point(colsImage/2 - heightStripe/2, widthImage/2 - widthStripe/2), new Point(colsImage/2 + heightStripe/2, widthImage/2 + widthStripe/2), new Scalar(0,120,0));
             
         	return img;
