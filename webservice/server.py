@@ -38,11 +38,11 @@ def uploadjpeg():
   #print request.files
   #print request
   image_data = request.form['image'].decode('base64')
-  print image_data
+  #print image_data
   #user_id = request.args.get('user_id')
   #jpeg_data = request.form['image']
-  #with open(os.path.join(root_dirname, 'test'),'wb') as f:
-  #  f.write(jpeg_data)
+  with open(os.path.join(root_dirname, 'test'),'wb') as f:
+    f.write(image_data)
   return "OK"
   
   
