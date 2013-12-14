@@ -311,6 +311,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     		
     	    	
     	PostResultAsyncTask postResults = new PostResultAsyncTask(this);
-    	postResults.execute("http://21dfe7b3.ngrok.com/push_result", user_id, analysis );
+    	postResults.execute("http://21dfe7b3.ngrok.com/push_result?user_id=" + user_id + "&analysis=" + analysis );
     }
 }
