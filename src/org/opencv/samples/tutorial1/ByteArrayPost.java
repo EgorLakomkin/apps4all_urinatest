@@ -20,6 +20,7 @@ import org.apache.http.params.HttpParams;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class ByteArrayPost extends AsyncTask<String, String, String> {
 
@@ -46,16 +47,15 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 		} catch (UnsupportedEncodingException e4) {
 			// TODO Auto-generated catch block
 			e4.printStackTrace();
+			Log.e("MYAPP","ex",e4);
 		}
-
-
-		String request = "http://domain.com";
 		URL url = null;
 		try {
 			url = new URL(req_url);
 		} catch (MalformedURLException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
+			Log.e("MYAPP","ex",e3);
 		} 
 		HttpURLConnection connection = null;
 		try {
@@ -77,6 +77,7 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 			connection.disconnect();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			Log.e("MYAPP","ex",e);
 			e.printStackTrace();
 		}	
 					
