@@ -5,6 +5,7 @@ from parse_rest.datatypes import Object
 import os, sys
 from parse_rest.user import User
 from collections import defaultdict
+from te
 
 root_dirname, root_filename = os.path.split(os.path.abspath(__file__))  
 titles = [u'Лейкоциты', u'Нитриты', u'Уробилиноген', u'Белок', u'pH', u'Кровь', u'Удельный вес', u'Кетоны', u'Билирубин', u'Глюкоза']
@@ -32,10 +33,13 @@ def append_result_by_user(user_id,result):
 @app.route('/upload_jpeg', methods=['GET','POST'])
 def uploadjpeg():
   print "PrevedUploadJPEG"
-  user_id = request.args.get('user_id')
-  jpeg_data = request.form['image']
-  with open(os.path.join(root_dirname, 'test'),'wb') as f:
-    f.write(jpeg_data)
+  print request.args
+  print request.form
+  print request
+  #user_id = request.args.get('user_id')
+  #jpeg_data = request.form['image']
+  #with open(os.path.join(root_dirname, 'test'),'wb') as f:
+  #  f.write(jpeg_data)
   return "OK"
   
   
