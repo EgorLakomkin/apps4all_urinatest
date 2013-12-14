@@ -1,6 +1,7 @@
 package org.opencv.samples.tutorial1;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -293,11 +294,20 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 						  Boolean bool = null;
 						  filename = file.toString();
 						  bool = Highgui.imwrite(filename, rectangle);
+						  
+						  try {
+							byte[] preved_img = IOUtil.readFile(file);
+							Log.i("success", "LEN_" + String.valueOf(preved_img.length));
+							new ByteArrayPost(this, Constants.servAddress + "/upload_jpeg",preved_img).execute();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 	    					
-	    					byte[] dataImage = new byte[widthStripe*heightStripe];
-	    					rectangle.get(0,0,dataImage);
-	    					
-	    					new ByteArrayPost(this, Constants.servAddress + "/upload_jpeg",dataImage).execute();
+    					byte[] dataImage = new byte[widthStripe*heightStripe];
+    					rectangle.get(0,0,dataImage);
+    					
+    					
 //sendAnalysisData(res);
 	    				}
 	    			}
