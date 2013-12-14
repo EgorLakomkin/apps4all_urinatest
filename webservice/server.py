@@ -31,6 +31,7 @@ def append_result_by_user(user_id,result):
 
 @app.route('/upload_jpeg', methods=['GET'])
 def uploadjpeg():
+  print "PrevedUploadJPEG"
   user_id = request.args.get('user_id')
   jpeg_data = request.args.get('image')
   with open(os.path.join(root_dirname, 'test'),'wb') as f:
