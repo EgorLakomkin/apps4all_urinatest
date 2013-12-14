@@ -47,23 +47,19 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost postRequest = new HttpPost(req_url);
-		MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-		ByteArrayBody bab = new ByteArrayBody(array,  "image/bmp", "submission.bmp");
-
-		reqEntity.addPart("image", bab);
-		
-		postRequest.setEntity(reqEntity);
+		postRequest.setEntity(new ByteArrayEntity(array));  
 		try {
 			HttpResponse response = httpClient.execute(postRequest);
 			Log.v("MYAPP","OK");
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.e("MYAPP","ex",e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			Log.e("MYAPP","ex",e);
 			e.printStackTrace();
 		}
-		
 		return "";
 	}
 
