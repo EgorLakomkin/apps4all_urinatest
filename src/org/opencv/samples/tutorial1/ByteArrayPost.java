@@ -51,31 +51,19 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 	protected String doInBackground(String... arg0) {
 		// TODO Auto-generated method stub
 
-		HttpClient httpClient = new DefaultHttpClient();
-		String base64 = Base64.encodeToString(array, Base64.DEFAULT);
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(req_url);
 		
-		
-		HttpPost postRequest = new HttpPost(req_url);
-		
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("image", new String(array)));
-		
+		MultipartEntity multiPart = new MultipartEntity();
+		multiPart.addPart("file", new ByteArrayBody(array, "image.img"));
+		post.setEntity(multiPart);
 		try {
-			postRequest.setEntity(new UrlEncodedFormEntity(params));
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}  
-		try {
-			HttpResponse response = httpClient.execute(postRequest);
-			Log.v("MYAPP","OK");
+			client.execute(post);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Log.e("MYAPP","ex",e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			Log.e("MYAPP","ex",e);
 			e.printStackTrace();
 		}
 		return "";
