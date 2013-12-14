@@ -8,6 +8,8 @@ from collections import defaultdict
 import numpy as np
 import cv2
 import cv2.cv as cv
+from temp1 import process_file
+
 root_dirname, root_filename = os.path.split(os.path.abspath(__file__))  
 titles = [u'Лейкоциты', u'Нитриты', u'Уробилиноген', u'Белок', u'pH', u'Кровь', u'Удельный вес', u'Кетоны', u'Билирубин', u'Глюкоза']
 
@@ -39,13 +41,16 @@ def uploadjpeg():
   #print request.files
   #print request
   file =  request.files['file']
-  file.save(os.path.join(root_dirname, 'test.bin'))
+  filename = os.path.join(root_dirname, 'test.bin')
+  file.save( filename )
+  glukoze = process_file(filename)
+  print "Found glukoze", glukoze
   #print image_data
   #user_id = request.args.get('user_id')
   #jpeg_data = request.form['image']
   #with open(os.path.join(root_dirname, 'test'),'w') as f:
   #  f.write(image_data)
-  return "OK"
+  return str(glukoze)
   
   
 @app.route('/statistics', methods=['GET'])

@@ -1,5 +1,9 @@
 package org.opencv.samples.tutorial1;
 
+
+import java.io.File;
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +27,9 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -259,6 +265,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         	return img;
     	} else {
 	    	if(setPhoto) {
+	    		
 
 	    			listPhotos.clear();
 	    			listPhotos.add(inputFrame.rgba().submat(new Rect(
@@ -282,10 +289,31 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 	    									);
 	    					thereIsRect = true;				
 	    					setPhoto = false;
-	    					byte[] dataImage = new byte[widthStripe*heightStripe];
-	    					rectangle.get(0,0,dataImage);
+
+	    					Mat mIntermediateMat = new Mat();
+
+	    					Imgproc.cvtColor(rectangle, mIntermediateMat, Imgproc.COLOR_RGBA2BGR, 3);
+	    					File path =
+						    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+						    String filename = "test.jpg";
+						   File file = new File(path, filename);
+
+						  Boolean bool = null;
+						  filename = file.toString();
+						  bool = Highgui.imwrite(filename, mIntermediateMat);
+						  
+						  try {
+							byte[] preved_img = IOUtil.readFile(file);
+							Log.i("success", "LEN_" + String.valueOf(preved_img.length));
+							new ByteArrayPost(this, Constants.servAddress + "/upload_jpeg",preved_img).execute();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							Log.e("success", "error "+e.toString());
+							e.printStackTrace();
+						}
 	    					
-	    					new ByteArrayPost(this, Constants.servAddress + "/upload_jpeg",dataImage).execute();
+    					
+    					
 //sendAnalysisData(res);
 	    				}
 	    			}
@@ -309,7 +337,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     	postResults.execute(Constants.servAddress+"/push_result?user_id=" + user_id + "&image=" + data );
      }
     
-    void sendAnalysisData(List<Integer> _data)
+    public static void sendAnalysisData(Activity _activity, List<Integer> _data)
     {
     	// here we get user id
     	String user_id = "M5mMzrLAcU";
@@ -322,7 +350,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     	}
     		
     	    	
-    	PostResultAsyncTask postResults = new PostResultAsyncTask(this);
+    	PostResultAsyncTask postResults = new PostResultAsyncTask(_activity);
     	postResults.execute(Constants.servAddress+"/push_result?user_id=" + user_id + "&analysis=" + analysis );
     }
 }
