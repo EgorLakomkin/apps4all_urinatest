@@ -28,6 +28,15 @@ def append_result_by_user(user_id,result):
   new_analysis = AnalysisResult(analysis=result, user_id = user_id)
   new_analysis.save()
 
+@app.route('/upload_jpeg', methods=['GET'])
+def uploadjpeg():
+  user_id = request.args.get('user_id')
+  jpeg_data = request.args.get('image')
+  with open('test','wb') as f:
+    f.write(jpeg_data)
+  return "OK"
+  
+  
 @app.route('/statistics', methods=['GET'])
 def statistics():
   user_id = request.args.get('user_id')
