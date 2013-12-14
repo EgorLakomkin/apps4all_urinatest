@@ -39,6 +39,7 @@ a {
   height: 750px;
   margin: 0 auto;
   text-align: center;
+  overflow: hidden;
   box-shadow: 0 0 15px #b39f75;
 }
 .wrap .header {
