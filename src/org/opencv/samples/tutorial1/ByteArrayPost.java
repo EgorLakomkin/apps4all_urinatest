@@ -17,6 +17,11 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+
+import com.parse.entity.mime.HttpMultipartMode;
+import com.parse.entity.mime.MultipartEntity;
+import com.parse.entity.mime.content.ByteArrayBody;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -39,50 +44,26 @@ public class ByteArrayPost extends AsyncTask<String, String, String> {
 	protected String doInBackground(String... arg0) {
 		// TODO Auto-generated method stub
 
-		StringBuilder parameters = new StringBuilder();
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost postRequest = new HttpPost(req_url);
+		MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+		ByteArrayBody bab = new ByteArrayBody(array,  "image/jpeg", "submission.jpg");
 
-		parameters.append("image=");
+		reqEntity.addPart("file", bab);
+		
+		postRequest.setEntity(reqEntity);
 		try {
-			parameters.append(URLEncoder.encode(new String(array),"UTF-8"));
-		} catch (UnsupportedEncodingException e4) {
+			HttpResponse response = httpClient.execute(postRequest);
+			Log.v("MYAPP","OK");
+		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
-			e4.printStackTrace();
-			Log.e("MYAPP","ex",e4);
-		}
-		URL url = null;
-		try {
-			url = new URL(req_url);
-		} catch (MalformedURLException e3) {
-			// TODO Auto-generated catch block
-			e3.printStackTrace();
-			Log.e("MYAPP","ex",e3);
-		} 
-		HttpURLConnection connection = null;
-		try {
-			connection = (HttpURLConnection) url.openConnection();
-			connection.setDoOutput(true);
-			connection.setDoInput(true);
-			connection.setRequestMethod("POST");
-			
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); 
-			connection.setRequestProperty("charset","UTF-8");
-			connection.setRequestProperty("Content-Length",Integer.toString(parameters.toString().getBytes().length));
-			
-			DataOutputStream wr = null;
-			
-			wr = new DataOutputStream(connection.getOutputStream ());
-			wr.writeBytes(parameters.toString());
-			wr.flush();
-			wr.close();
-			connection.disconnect();
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			Log.e("MYAPP","ex",e);
 			e.printStackTrace();
-		}	
-					
+		}
 		
-		return null;
+		return "";
 	}
 
 	@Override
