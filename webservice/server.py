@@ -38,7 +38,8 @@ def uploadjpeg():
   #print request.form
   #print request.files
   #print request
-  print request.files
+  file =  request.files['file']
+  file.save(os.path.join(root_dirname, 'test.bin'))
   #print image_data
   #user_id = request.args.get('user_id')
   #jpeg_data = request.form['image']
