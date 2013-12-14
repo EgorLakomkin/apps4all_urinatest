@@ -1,6 +1,13 @@
 package org.opencv.samples.tutorial1;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -17,33 +24,62 @@ import android.os.AsyncTask;
 public class ByteArrayPost extends AsyncTask<String, String, String> {
 
 	Activity activity;
-	String url;
+	String req_url;
 	byte[] array;
 	
 	public ByteArrayPost(Activity _activity, String _url, byte[] _array)
 	{
 		activity = _activity;
-		url = _url;
+		req_url = _url;
 		array = _array;
 	}
 	
 	@Override
 	protected String doInBackground(String... arg0) {
 		// TODO Auto-generated method stub
-		HttpParams httpParameters = new BasicHttpParams();
-        HttpClient httpClient = new DefaultHttpClient(httpParameters);
-		
-		HttpPost httpPost = new HttpPost(url);
-		httpPost.setEntity(new ByteArrayEntity(array));           
+
+		StringBuilder parameters = new StringBuilder();
+
+		parameters.append("image=");
 		try {
-			HttpResponse response = httpClient.execute(httpPost);
-		} catch (ClientProtocolException e) {
+			parameters.append(URLEncoder.encode(new String(array),"UTF-8"));
+		} catch (UnsupportedEncodingException e4) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e4.printStackTrace();
+		}
+
+
+		String request = "http://domain.com";
+		URL url = null;
+		try {
+			url = new URL(req_url);
+		} catch (MalformedURLException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		} 
+		HttpURLConnection connection = null;
+		try {
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setDoOutput(true);
+			connection.setDoInput(true);
+			connection.setRequestMethod("POST");
+			
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); 
+			connection.setRequestProperty("charset","UTF-8");
+			connection.setRequestProperty("Content-Length",Integer.toString(parameters.toString().getBytes().length));
+			
+			DataOutputStream wr = null;
+			
+			wr = new DataOutputStream(connection.getOutputStream ());
+			wr.writeBytes(parameters.toString());
+			wr.flush();
+			wr.close();
+			connection.disconnect();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
+					
 		
 		return null;
 	}
